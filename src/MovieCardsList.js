@@ -1,4 +1,6 @@
 import React from 'react'
+import MovieCard from './MovieCard.js'
+import {SimpleGrid} from "@chakra-ui/react"
 
 class MovieCardsList extends React.Component{
 
@@ -11,7 +13,9 @@ class MovieCardsList extends React.Component{
             arr.push(json[key]);
         });
 
-        return <ul>The list: {arr.map(item => <h4>{item.Title}{console.log('yo', item[0])}</h4>)}</ul>;
+        return <SimpleGrid columns={6} spacing={10}>{
+            arr.map(item => <MovieCard title={item.Title} year={item.Year} type={item.Type} poster={item.Poster}/>)}
+        </SimpleGrid>;
         
     }
 }

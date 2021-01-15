@@ -44,7 +44,7 @@ class App extends React.Component {
 
   render(){
     return (
-      <div className='centered'>
+      <div>
         <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
         <form onSubmit={this.handleSubmit}>
         <FormControl>
