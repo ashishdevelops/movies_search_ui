@@ -1,21 +1,30 @@
 import React from 'react'
 import MovieCard from './MovieCard.js'
-import {SimpleGrid} from "@chakra-ui/react"
+import {SimpleGrid, Box, Center, Spinner} from "@chakra-ui/react"
 
 class MovieCardsList extends React.Component{
 
     render(){
         var arr = []
         var json = this.props.movies;
-        
-        Object.keys(json).forEach(function(key) {
-            console.log(json[key])
-            arr.push(json[key]);
-        });
+        var element = <h3>error</h3>
+        if(json == null || Object.keys(json).length === 0){
+            element = <h3>No Results</h3>
+        }else{
 
-        return <SimpleGrid columns={6} spacing={10}>{
-            arr.map(item => <MovieCard title={item.Title} year={item.Year} type={item.Type} poster={item.Poster}/>)}
-        </SimpleGrid>;
+        
+            Object.keys(json).forEach(function(key) {
+                console.log(json[key])
+                arr.push(json[key]);
+            });
+            
+            element = arr.map(item => <MovieCard key={item.imdbID} title={item.Title} year={item.Year} type={item.Type} poster={item.Poster}/>)
+
+        }
+
+        return(
+            <SimpleGrid minChildWidth="250px" rowGap='20px' columnGap='50px'>{element}</SimpleGrid>
+        )
         
     }
 }
