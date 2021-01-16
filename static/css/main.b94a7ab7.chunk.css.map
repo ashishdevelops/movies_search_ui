@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/App.css"],"names":[],"mappings":"AAAA,UACE,cAAe,CACf,OAAQ,CACR,QAAS,CAET,8BACF","file":"main.b94a7ab7.chunk.css","sourcesContent":[".centered{\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  /* bring your own prefixes */\n  transform: translate(-50%, -50%);\n}\n"]}
