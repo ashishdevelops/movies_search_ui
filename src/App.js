@@ -20,15 +20,14 @@ class App extends React.Component {
 
   constructor(props){
     super(props);
-    this.state = {movies: {}, search_term: "error", loading:false};
-    this.api_key = 'e2878480'
+    this.state = {movies: {}, search_term: "error", loading:false, nominations: []};
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleNominate = this.handleNominate.bind(this);
   }
 
   moviesList(){
     this.setState({loading: true}, ()=>{
-      console.log(`loading? ${this.state.loading}`)
       const http = new XMLHttpRequest();
       const url = `http://www.omdbapi.com/?s=${this.state.search_term}&apikey=e2878480&`
       http.open("GET", url)
@@ -41,6 +40,7 @@ class App extends React.Component {
             movies: JSON.parse(http.responseText)['Search'],
             loading: false
           });
+          console.log("API CALL RECIEVED")
         }
       }
     });
@@ -55,12 +55,25 @@ class App extends React.Component {
     this.setState({ search_term: event.target.value})
   }
 
+  handleNominate(event){
+    let to_nominate = this.state.movies[event.target.value];
+    event.target.disabled = true;
+    this.setState({ nominations: [...this.state.nominations, to_nominate] })
+  }
+
+  handleRemoveNominate(event){
+    // let to_nominate = this.state.movies[event.target.value];
+    // event.target.disabled = true;
+    // this.setState({ nominations: [...this.state.nominations, to_nominate] })
+    console.log("denominate")
+  }
+
   render(){
 
     if(this.state.loading){
       var search_response = <Center><Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl"/></Center>;
     }else{
-      var search_response = <MovieCardsList movies={this.state.movies} loading={this.state.loading}/>  
+      var search_response = <MovieCardsList onItemClick={this.handleNominate} movies={this.state.movies} loading={this.state.loading}/>  
     }
 
     return (
@@ -73,14 +86,14 @@ class App extends React.Component {
                   <InputLeftElement pointerEvents="none" children={<Search2Icon color="gray.300"/>} />
                   <Input type='field' id='search_field' value={this.state.value} onChange={this.handleChange}/>
                 </InputGroup>
-                <FormHelperText>Search for an nominate your favorite movies :)</FormHelperText>
+                <FormHelperText>Search for and nominate your favorite movies :)</FormHelperText>
               </FormControl>
             </form>
           </Box> 
         </Center>
         <Box borderWidth="1px" borderRadius="lg" padding='30px' marginLeft='100px' marginRight='100px'>
           <FormLabel>Nomination List</FormLabel>
-          <NominationList movies={this.state.movies}/>  
+          <NominationList movies={this.state.nominations} onDenominate={this.handleRemoveNominate}/>  
         </Box>
         <Box borderWidth="1px" borderRadius="lg" padding='30px' margin='100px' minH='300px'>
           {search_response} 

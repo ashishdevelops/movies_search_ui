@@ -14,11 +14,11 @@ class MovieCardsList extends React.Component{
 
         
             Object.keys(json).forEach(function(key) {
-                console.log(json[key])
+                //console.log(json[key])
                 arr.push(json[key]);
             });
-            
-            element = arr.map(item => <MovieCard key={item.imdbID} title={item.Title} year={item.Year} type={item.Type} poster={item.Poster}/>)
+
+            element = arr.map((item, index) => <MovieCard key={index} title={item.Title} year={item.Year} type={item.Type} poster={item.Poster} onItemClick={this.props.onItemClick} index={index}/>)
 
         }
 

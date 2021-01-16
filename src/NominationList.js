@@ -1,13 +1,13 @@
 import React from 'react'
-import {Box} from '@chakra-ui/react'
+import MovieCard from './MovieCard'
+import {Wrap} from '@chakra-ui/react'
 
 class NominationList extends React.Component{
-    constructor(props){
-        super(props)
-    }
-
     render(){
-        return <Box></Box>
+
+        var arr = this.props.movies;
+
+        return <Wrap>{arr.map((item, index) => <MovieCard key={index} title={item.Title} year={item.Year} type={item.Type} poster={item.Poster} onNominate={this.props.onNominate} index={index}/>)}</Wrap>
     }
 }
 export default NominationList;
