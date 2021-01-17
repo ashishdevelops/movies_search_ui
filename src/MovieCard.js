@@ -10,17 +10,22 @@ class MovieCard extends React.Component{
 
     render(){
         if(this.props.card_type == 'result'){
+            if((this.props.nominationList).length === 0){
+                this.nominated = false;
+            }
             for(let i = 0; i < (this.props.nominationList).length; ++i){
                 if(this.props.nominationList[i].imdbID === this.props.id){
-                    console.log(this.props.nominationList[i])
                     this.nominated = true;
                     break;
-                }       
+                }else{
+                    this.nominated = false;
+                }
             }
             var button = <Button margin='5px' colorScheme="teal" variant="solid" position='absolute' isDisabled={this.nominated} onClick={this.props.onItemClick} value={this.props.index}>Nominate</Button>
         }else{
-            var button = <Button margin='5px' colorScheme="red" variant="solid" position='absolute' isDisabled={this.nominated} onClick={this.props.onItemClick} value={this.props.index}>Delete</Button>
+            var button = <Button margin='5px' colorScheme="red" variant="solid" position='absolute' onClick={this.props.onItemClick} value={this.props.index}>Remove</Button>
         }
+        
 
         return(
         <Box w="250px" borderWidth="1px" borderRadius="lg" overflow="hidden">
