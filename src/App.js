@@ -27,9 +27,10 @@ class App extends React.Component {
   }
 
   moviesList(){
+    console.log('MAKING REQUEST')
     this.setState({loading: true}, ()=>{
       const http = new XMLHttpRequest();
-      const url = `http://www.omdbapi.com/?s=${this.state.search_term}&apikey=e2878480&`
+      const url = `https://www.omdbapi.com/?s=${this.state.search_term}&apikey=e2878480&`
       http.open("GET", url)
       http.send()
 
