@@ -72,7 +72,9 @@ class App extends React.Component {
   handleNominate(event){
     let to_nominate = this.state.movies[event.target.value];
     //event.target.disabled = true;
-    this.setState({ nominations: [...this.state.nominations, to_nominate] })
+    if((this.state.nominations).length < 5){
+      this.setState({ nominations: [...this.state.nominations, to_nominate] })
+    }
   }
 
   handleRemoveNominate(event){
@@ -90,6 +92,10 @@ class App extends React.Component {
       var search_response = <Center><Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl"/></Center>;
     }else{
       var search_response = <MovieCardsList onItemClick={this.handleNominate} movies={this.state.movies} loading={this.state.loading} nominationList={this.state.nominations}/>  
+    }
+
+    if((this.state.nominations).length === 5){
+      alert("You have finished nominating :)")
     }
 
     return (
