@@ -20,7 +20,7 @@ class App extends React.Component {
 
   constructor(props){
     super(props);
-    this.state = {movies: {}, search_term: "error", loading:false, nominations: []};
+    this.state = {movies: [], search_term: "error", loading:false, nominations: []};
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleNominate = this.handleNominate.bind(this);
@@ -37,8 +37,18 @@ class App extends React.Component {
       http.onreadystatechange = (e) => {
         console.log(http.readyState, http.status)
         if(http.readyState === 4 && http.status === 200){
+
+          var json = JSON.parse(http.responseText)['Search'];
+          var movies_arr = []
+          Object.keys(json).forEach(function(key) {
+            if(json[key].Type == 'movie'){
+              movies_arr.push(json[key]);
+            }
+          });
+
+
           this.setState({
-            movies: JSON.parse(http.responseText)['Search'],
+            movies: movies_arr,
             loading: false
           });
           console.log("API CALL RECIEVED")
@@ -58,7 +68,7 @@ class App extends React.Component {
 
   handleNominate(event){
     let to_nominate = this.state.movies[event.target.value];
-    event.target.disabled = true;
+    //event.target.disabled = true;
     this.setState({ nominations: [...this.state.nominations, to_nominate] })
   }
 
@@ -74,7 +84,7 @@ class App extends React.Component {
     if(this.state.loading){
       var search_response = <Center><Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl"/></Center>;
     }else{
-      var search_response = <MovieCardsList onItemClick={this.handleNominate} movies={this.state.movies} loading={this.state.loading}/>  
+      var search_response = <MovieCardsList onItemClick={this.handleNominate} movies={this.state.movies} loading={this.state.loading} nominationList = {this.state.nominations}/>  
     }
 
     return (
@@ -94,7 +104,7 @@ class App extends React.Component {
         </Center>
         <Box borderWidth="1px" borderRadius="lg" padding='30px' marginLeft='100px' marginRight='100px'>
           <FormLabel>Nomination List</FormLabel>
-          <NominationList movies={this.state.nominations} onDenominate={this.handleRemoveNominate}/>  
+          <NominationList movies={this.state.nominations} onItemClick={this.handleRemoveNominate}/>  
         </Box>
         <Box borderWidth="1px" borderRadius="lg" padding='30px' margin='100px' minH='300px'>
           {search_response} 

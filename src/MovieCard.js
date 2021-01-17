@@ -3,10 +3,28 @@ import { Box, Image, Badge, Button } from "@chakra-ui/react"
 
 class MovieCard extends React.Component{
 
+    constructor(props){
+        super(props)
+        this.nominated = false;
+    }
+
     render(){
+        if(this.props.card_type == 'result'){
+            for(let i = 0; i < (this.props.nominationList).length; ++i){
+                if(this.props.nominationList[i].imdbID === this.props.id){
+                    console.log(this.props.nominationList[i])
+                    this.nominated = true;
+                    break;
+                }       
+            }
+            var button = <Button margin='5px' colorScheme="teal" variant="solid" position='absolute' isDisabled={this.nominated} onClick={this.props.onItemClick} value={this.props.index}>Nominate</Button>
+        }else{
+            var button = <Button margin='5px' colorScheme="red" variant="solid" position='absolute' isDisabled={this.nominated} onClick={this.props.onItemClick} value={this.props.index}>Delete</Button>
+        }
+
         return(
         <Box w="250px" borderWidth="1px" borderRadius="lg" overflow="hidden">
-            <Button margin='5px' colorScheme="teal" variant="solid" position='absolute' isDisabled={false} onClick={this.props.onItemClick} value={this.props.index}>Nominate</Button>
+            {button}
             <Image src={this.props.poster} fallbackSrc="https://via.placeholder.com/300" width='250px' height='250px' objectFit='cover'/>
             <Box p="6">
                 <Box d="flex" alignItems="baseline">
