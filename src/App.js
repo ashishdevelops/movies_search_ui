@@ -20,7 +20,7 @@ class App extends React.Component {
 
   constructor(props){
     super(props);
-    this.state = {movies: [], search_term: "error", loading:false, nominations: []};
+    this.state = {movies: [], search_term: "error", loading:false, nominations: [], nominationFull: false};
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleNominate = this.handleNominate.bind(this);
@@ -74,6 +74,10 @@ class App extends React.Component {
     //event.target.disabled = true;
     if((this.state.nominations).length < 5){
       this.setState({ nominations: [...this.state.nominations, to_nominate] })
+      this.setState({nominationFull : true})
+      //console.log((this.state.nominations).length)
+    }else{
+      alert("You have finished nominating :)")
     }
   }
 
@@ -92,10 +96,6 @@ class App extends React.Component {
       var search_response = <Center><Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl"/></Center>;
     }else{
       var search_response = <MovieCardsList onItemClick={this.handleNominate} movies={this.state.movies} loading={this.state.loading} nominationList={this.state.nominations}/>  
-    }
-
-    if((this.state.nominations).length === 5){
-      alert("You have finished nominating :)")
     }
 
     return (
