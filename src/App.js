@@ -28,23 +28,23 @@ class App extends React.Component {
 
   moviesList(){
     console.log('MAKING REQUEST')
-    this.setState({loading: true}, ()=>{
-      const http = new XMLHttpRequest();
-      const url = `https://www.omdbapi.com/?s=${this.state.search_term}&apikey=e2878480&`
-      http.open("GET", url)
-      http.send()
+    // this.setState({loading: true}, ()=>{
+    //   const http = new XMLHttpRequest();
+    //   const url = `https://www.omdbapi.com/?s=${this.state.search_term}&apikey=e2878480&`
+    //   http.open("GET", url)
+    //   http.send()
 
-      http.onreadystatechange = (e) => {
-        console.log(http.readyState, http.status)
-        if(http.readyState === 4 && http.status === 200){
+    //   http.onreadystatechange = (e) => {
+    //     console.log(http.readyState, http.status)
+    //     if(http.readyState === 4 && http.status === 200){
           this.setState({
-            movies: JSON.parse(http.responseText)['Search'],
-            loading: false
+            movies: {"Search":[{"Title":"Guardians of the Galaxy","Year":"2014","imdbID":"tt2015381","Type":"movie","Poster":"https://m.media-amazon.com/images/M/MV5BMTAwMjU5OTgxNjZeQTJeQWpwZ15BbWU4MDUxNDYxODEx._V1_SX300.jpg"},{"Title":"Guardians of the Galaxy Vol. 2","Year":"2017","imdbID":"tt3896198","Type":"movie","Poster":"https://m.media-amazon.com/images/M/MV5BNjM0NTc0NzItM2FlYS00YzEwLWE0YmUtNTA2ZWIzODc2OTgxXkEyXkFqcGdeQXVyNTgwNzIyNzg@._V1_SX300.jpg"},{"Title":"Guardians of the Galaxy","Year":"2015–","imdbID":"tt4176370","Type":"series","Poster":"https://m.media-amazon.com/images/M/MV5BNDM4NDQxMDU2MV5BMl5BanBnXkFtZTgwMDY2MDQ5NjE@._V1_SX300.jpg"},{"Title":"Guardians of the Galaxy: Inferno","Year":"2017","imdbID":"tt7131308","Type":"movie","Poster":"https://m.media-amazon.com/images/M/MV5BZGQ0YzEyNWQtNGJiMi00NTAxLThkNDctNGY2ODkzYWMxZmZkXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg"},{"Title":"LEGO Marvel Super Heroes - Guardians of the Galaxy: The Thanos Threat","Year":"2017","imdbID":"tt7387224","Type":"movie","Poster":"https://m.media-amazon.com/images/M/MV5BMjhlYzVhNTMtMmFkYy00NDhiLTkyNDgtYzhhMTZiMzM2OTA5XkEyXkFqcGdeQXVyNjI2OTgxNzY@._V1_SX300.jpg"},{"Title":"Disneyland Resort: Guardians of the Galaxy - Mission Breakout!","Year":"2017","imdbID":"tt7134278","Type":"movie","Poster":"https://m.media-amazon.com/images/M/MV5BOTYwZmQwY2MtMzkwMC00ZjllLTg2YWItNzg1MzEzOThjYTkxXkEyXkFqcGdeQXVyMTA1MTY4NTkz._V1_SX300.jpg"},{"Title":"Guardians of the Galaxy: The Telltale Series","Year":"2017","imdbID":"tt6636812","Type":"game","Poster":"https://m.media-amazon.com/images/M/MV5BMzkwYzJkOTYtOWVlZC00Mzk3LThlZTktYWY3MDM3N2IwZDA3XkEyXkFqcGdeQXVyNTk5Nzg0MDE@._V1_SX300.jpg"},{"Title":"Bonus Round: The Making of 'Guardians of the Galaxy Vol. 2'","Year":"2017","imdbID":"tt7312152","Type":"movie","Poster":"N/A"},{"Title":"Guardians of the Galaxy Vol. 3","Year":"2023","imdbID":"tt6791350","Type":"movie","Poster":"https://m.media-amazon.com/images/M/MV5BMWM3ZWNlMjgtODZjMi00YTAwLWJhZTktMTM4NTgyMjE0NjMwXkEyXkFqcGdeQXVyNTE1NjY5Mg@@._V1_SX300.jpg"},{"Title":"The Intergalactic Visual Effects of 'Guardians of the Galaxy'","Year":"2014","imdbID":"tt5286008","Type":"movie","Poster":"N/A"}],"totalResults":"12","Response":"True"}['Search']  //JSON.parse(http.responseText)['Search'],
+    //      loading: false
           });
-          console.log("API CALL RECIEVED")
-        }
-      }
-    });
+    //       console.log("API CALL RECIEVED")
+    //     }
+    //   }
+    // });
   }
 
   handleSubmit(event){
