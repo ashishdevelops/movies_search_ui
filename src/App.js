@@ -84,7 +84,7 @@ class App extends React.Component {
       this.setState({ nominations: [...this.state.nominations, to_nominate] });
       if((this.state.nominations).length == 4){
         this.setState({full:true})
-        alert('full')
+        alert('you have reached the maximum nominations')
       }
     }else{
       this.setState({full:true})
