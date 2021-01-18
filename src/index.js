@@ -5,10 +5,12 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ChakraProvider } from "@chakra-ui/react"
 
+import MovieResult from "./MovieResult.js"
+//<MovieResult title="Guardians of the Galaxy Vol. 2" desc="The Guardians struggle to keep together as a team while dealing with their personal family issues, notably Star-Lord's encounter with his father the ambitious celestial being Ego."/>
 ReactDOM.render(
   <React.StrictMode>
     <ChakraProvider>
-      <App />
+      <App/>
     </ChakraProvider>
   </React.StrictMode>,
   document.getElementById('root')
