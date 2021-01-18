@@ -2,17 +2,24 @@ import React from 'react'
 import './App.css';
 import MovieCardsList from './MovieCardsList';
 import NominationList from './NominationList'
+import Sticky from 'react-stickynode'
+// import Banner from './Banner.js'
 import {
-  Box,
-  FormControl,
-  FormLabel,
-  FormHelperText,
-  Input,
-  Center,
-  InputLeftElement,
-  InputGroup,
+  Box,Center,Flex,Spacer,
+  Heading,
+  FormControl,FormHelperText,Input,
+  InputLeftElement,InputGroup,
   Spinner
 } from "@chakra-ui/react"
+// import {
+//   Modal,
+//   ModalOverlay,
+//   ModalContent,
+//   ModalHeader,
+//   ModalFooter,
+//   Button,
+//   useDisclosure,
+// } from "@chakra-ui/react"
 
 import {Search2Icon} from "@chakra-ui/icons"
 
@@ -20,11 +27,12 @@ class App extends React.Component {
 
   constructor(props){
     super(props);
-    this.state = {movies: [], search_term: "error", loading:false, nominations: [], nominationFull: false};
+    this.state = {movies: [], search_term: "error", loading:false, nominations: [], full: false};
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleNominate = this.handleNominate.bind(this);
     this.handleRemoveNominate = this.handleRemoveNominate.bind(this);
+    this.bannerRef = React.createRef();
   }
 
   moviesList(){
@@ -73,11 +81,13 @@ class App extends React.Component {
     let to_nominate = this.state.movies[event.target.value];
     //event.target.disabled = true;
     if((this.state.nominations).length < 5){
-      this.setState({ nominations: [...this.state.nominations, to_nominate] })
-      this.setState({nominationFull : true})
-      //console.log((this.state.nominations).length)
+      this.setState({ nominations: [...this.state.nominations, to_nominate] });
+      if((this.state.nominations).length == 4){
+        this.setState({full:true})
+        alert('you have reached the maximum nominations')
+      }
     }else{
-      alert("You have finished nominating :)")
+      this.setState({full:true})
     }
   }
 
@@ -87,6 +97,9 @@ class App extends React.Component {
     var arr = this.state.nominations;
     arr.splice(event.target.value,1)
     this.setState({ nominations: arr })
+    if((this.state.nominations).length < 5){
+      this.setState({full:false})
+    }
     //console.log('denominate', event.target.value, this.state.nominations)
   }
 
@@ -113,14 +126,20 @@ class App extends React.Component {
             </form>
           </Box> 
         </Center>
-        <Box borderWidth="1px" borderRadius="lg" padding='30px' marginLeft='100px' marginRight='100px' minH='150px'>
-          <FormLabel>Nomination List</FormLabel>
-          <NominationList movies={this.state.nominations} onItemClick={this.handleRemoveNominate}/>  
-        </Box>
-        <Box borderWidth="1px" borderRadius="lg" padding='30px' marginTop='40px' marginLeft='100px' marginRight='100px' minH='300px'>
-          <FormLabel>Search Results</FormLabel>
-          {search_response} 
-        </Box>
+
+        <Flex w="1200px" margin='auto' height='100%'>
+          <Sticky>
+          <Box w="350px" borderWidth="1px" borderRadius="lg" padding='10px'>
+            <Heading size='sm'>Nomination List</Heading>
+            <NominationList movies={this.state.nominations} onItemClick={this.handleRemoveNominate}/>  
+          </Box>
+          </Sticky>
+          <Spacer/>
+          <Box w="800px" borderWidth="1px" borderRadius="lg" padding='10px'>
+            <Heading size='sm'>Search Results</Heading>
+            {search_response} 
+          </Box>
+        </Flex>
       </div>
     )
   }
